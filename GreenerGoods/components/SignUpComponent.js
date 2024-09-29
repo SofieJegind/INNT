@@ -16,18 +16,12 @@ function SignUpForm() {
 
     
     const auth =  getAuth();
-    //Her defineres brugeroprettelsesknappen, som aktiverer handleSubmit igennem onPress
+    //Her defineres brugeroprettelsesknappen, som aktiverer handleSubmit når der trykkes på knappen
     const renderButton = () => {
         return <Button onPress={() => handleSubmit()} title="Create user" />;
     };
-
-
-    /*
-   * Metoden herunder håndterer oprettelse af brugere ved at anvende den prædefinerede metode, som stilles til rådighed af firebase
-   * createUserWithEmailAndPassword tager en mail og et password med som argumenter og foretager et asynkront kald, der eksekverer en brugeroprettelse i firebase https://firebase.google.com/docs/auth/web/password-auth#create_a_password-based_account
-   * Opstår der fejl under forsøget på oprettelse, vil der i catch blive fremsat en fejlbesked, som, ved brug af
-   * setErrorMessage, angiver værdien for state-variablen, errormessage
-   */
+    
+    //Funktion, der håndterer oprettelse af bruger, når brugeren trykker på knappen
       const handleSubmit = async() => {
         await createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
@@ -42,10 +36,6 @@ function SignUpForm() {
           // ..
         });
       }
-
-//I return oprettes en tekstkomponent, der angiver at dette er SignUpfrom
-//Dernæst er der to inputfelter, som løbeende sætter værdien af state-variablerne, mail og password.
-// Afslutningsvis, angives det at, hvis errorMessage får fastsat en værdi, skal denne udskrives i en tekstkomponent.
 
     return (
         <View style={styles.componentsBox}>
@@ -82,11 +72,11 @@ const styles = StyleSheet.create({
         margin: 10,
         padding: 10,
         width: 300,
-        backgroundColor: 'pink',
+        backgroundColor: 'white',
     },
     header: {
         fontSize: 40,
-        color: 'pink',
+        color: 'white',
     },
     componentsBox: {
         flex: 1,
@@ -98,5 +88,5 @@ const styles = StyleSheet.create({
       },
 });
 
-//Eksport af Loginform, således denne kan importeres og benyttes i andre komponenter
+//Eksport af Loginform, så den kan importeres og benyttes i andre komponenter
 export default SignUpForm

@@ -23,18 +23,16 @@ const firebaseConfig = {
   appId: "1:915765709183:web:ee68ec7290325ad03f724a"
 };
 
-
+// Initialize Firebase
 export default function App() {
   const [user, setUser] = useState({loggedIn: false});  
-  // Vi kontrollerer at der ikke allerede er en initialiseret instans af firebase
-    // Så undgår vi fejlen Firebase App named '[DEFAULT]' already exists (app/duplicate-app).
+  // Kontrollering af at der ikke allerede er en initialiseret instans af firebase
     if (getApps().length < 1) {
       initializeApp(firebaseConfig);
       console.log("Firebase On!");
-  // Initialize other firebase products here
   }
   const auth = getAuth();
-
+// Heri defineres en funktion, der tager en callback som argument, og returnerer en listener, der observerer om brugeren er logget ind eller ej.
   function onAuthStateChange(callback) {
     return onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -43,15 +41,13 @@ export default function App() {
         const uid = user.uid;
         callback({loggedIn: true, user: user});
         console.log("You are logged in!");
-        // ...
       } else {
         // User is signed out
-        // ...
         callback({loggedIn: false});
       }
     });
   };
-  //Heri aktiverer vi vores listener i form af onAuthStateChanged, så vi dynamisk observerer om brugeren er aktiv eller ej.
+  //Heri aktiveres en listener i form af onAuthStateChanged, så vi dynamisk observerer om brugeren er aktiv eller ej.
   useEffect(() => {
     const unsubscribe = onAuthStateChange(setUser);
     return () => {

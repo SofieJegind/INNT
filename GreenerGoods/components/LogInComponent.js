@@ -1,30 +1,19 @@
-import {
-    Button,
-    Text,
-    View,
-    TextInput,
-    StyleSheet,
-} from 'react-native';
+import { Button, Text, View, TextInput, StyleSheet,} from 'react-native';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from 'react';
 
-
+//LoginForm er en funktion, der returnerer en række komponenter, som tilsammen udgør en formular til login
 function LoginForm() {
 
     const auth = getAuth();
 
-    //Instantiering af statevariabler, der skal benyttes i LoginForm
+    // useState hooks til at håndtere variabler i form af email, password, isCompleted og errorMessage
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [isCompleted, setCompleted] = useState(false)
     const [errorMessage, setErrorMessage] = useState(null)
 
-    /*
-    * Metoden herunder håndterer login af en eksisterende bruger ved at anvende den prædefinerede metode, som stilles til rådighed af firebase
-    * signInWithEmailAndPassword tager en mail og et password med som argumenter og foretager et asynkront kald, der eksekverer login i firebase https://firebase.google.com/docs/auth/web/password-auth#sign_in_a_user_with_an_email_address_and_password
-    * Opstår der fejl under forsøget på login, vil der i catch blive fremsat en fejlbesked, som, ved brug af
-    * setErrorMessage, angiver værdien for state-variablen, errormessage
-    */
+    // Funktion, der håndterer login, når brugeren trykker på knappen
     const handleSubmit = async () => {
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
@@ -32,6 +21,7 @@ function LoginForm() {
             const user = userCredential.user;
             // ...
         })
+        // Hvis der opstår en fejl under login, vil der blive fremsat en fejlbesked, som, ved brug af setErrorMessage, angiver værdien for state-variablen, errormessage
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
@@ -39,14 +29,11 @@ function LoginForm() {
         });
     }
 
-    //Her defineres loginknappen, som aktiverer handleSubmit igennem onPress
+    //Loginknappen, som aktiverer handleSubmit når der trykkes på knappen
     const renderButton = () => {
         return <Button onPress={() => handleSubmit()} title="Login" style={styles.button}/>;
     };
-
-//I return oprettes en tekstkomponent, der angiver at dette er loginfrom
-//Dernæst er der to inputfelter, som løbeende sætter værdien af state-variablerne, mail og password.
-// Afslutningsvis, angives det at, hvis errorMessage får fastsat en værdi, skal denne udskrives i en tekstkomponent.
+    
     return (
         <View style={styles.componentsBox}>
             <Text style={styles.header}>Login</Text>
@@ -71,7 +58,7 @@ function LoginForm() {
     );
 }
 
-//Lokal styling til brug i LoginFrom
+//Styling 
 const styles = StyleSheet.create({
     error: {
         color: 'red',
@@ -82,14 +69,14 @@ const styles = StyleSheet.create({
         margin: 10,
         padding: 10,
         width: 300,
-        backgroundColor: 'pink',
+        backgroundColor: 'white',
     },
     header: {
         fontSize: 40,
-        color: 'pink',
+        color: 'white',
     },
     button: {
-        color: 'pink',
+        color: 'white',
     }, 
     componentsBox: {
         flex: 1,
