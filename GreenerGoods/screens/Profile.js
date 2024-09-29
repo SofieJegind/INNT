@@ -1,17 +1,18 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native";
 import BackgroundComponent from "../components/BackgroundComponent";
+import SignUpForm from "../components/SignUpComponent";
+import LoginForm from "../components/LogInComponent";
 
 export default function ProfileScreen() {
     return (
     <BackgroundComponent>
-     <View style={styles.container}>
-        <Text style={styles.text}>Login</Text>
-        <Input/>
-        <Text style={styles.text}>Password</Text>
-        <Input secureTextEntry/>
-        <StatusBar style="auto" />
-        </View>
+     <SafeAreaView style={styles.container}>
+     <View style={styles.componentsBox}>
+     <SignUpForm/>
+      <LoginForm/>
+     </View>
+        </SafeAreaView>
     </BackgroundComponent>
       
     );
@@ -21,14 +22,8 @@ export default function ProfileScreen() {
     container: {
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: 'rgba(0, 0,0,0.5)',
-      height: 300,
-      width: 300,
       borderRadius: 20,
-    }, text: {
-        color: 'pink',
-    }
-
+    }, 
   });
 
   export const Input = () => (
